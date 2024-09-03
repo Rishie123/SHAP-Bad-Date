@@ -1,5 +1,3 @@
-#!/bin/bash
-
 import dash
 from dash import dcc, html
 import plotly.express as px
@@ -7,7 +5,6 @@ import pandas as pd
 
 # Load the combined DataFrame
 df = pd.read_csv('combined_feature_importance_bad_dates.csv')
-
 
 # Initialize the Dash app
 app = dash.Dash(__name__)
@@ -24,14 +21,17 @@ def prepare_data(df, type_label):
     pivot_df = pivot_df.loc[:, (pivot_df != 0).any(axis=0)]
     return pivot_df
 
-
 # Create Plotly Express graphs for each type
 def create_figure(data, title):
-    # Removed the incorrect '+' after title
     fig = px.area(data, title=title)
     fig.update_layout(
-        yaxis_title='Normalized Importance', 
-        xaxis_title='Time of Heater Profile (seconds) [Note: This is equivalent to Time after turning on the Heaters and switching it off at 60 seconds boundsay]')
+        title={'text': title, 'font': {'size': 20}},
+        xaxis_title={'text': 'Time of Heater Profile (seconds) [Note: This is equivalent to Time after turning on the Heaters and switching it off at 60 seconds boundsay]', 'font': {'size': 16}},
+        yaxis_title={'text': 'Normalized Importance', 'font': {'size': 16}},
+        legend={'font': {'size': 14}},
+        xaxis={'tickfont': {'size': 12}},
+        yaxis={'tickfont': {'size': 12}}
+    )
     return fig
 
 # Types to include in the dashboard
