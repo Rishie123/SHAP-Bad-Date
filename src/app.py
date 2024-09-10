@@ -17,6 +17,8 @@ def prepare_data(df, type_label):
     # Create pivot table
     pivot_df = df_filtered.pivot_table(
         values='Normalized_Importance', index='Duration', columns='Feature', aggfunc='sum')
+    # Sort the pivot_df by the Duration index in ascending order
+    pivot_df = pivot_df.sort_index(ascending=True)
     # Filter out columns where all values are zero
     pivot_df = pivot_df.loc[:, (pivot_df != 0).any(axis=0)]
     return pivot_df
